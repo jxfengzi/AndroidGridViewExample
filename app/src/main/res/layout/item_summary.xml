@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:background="@drawable/tag_normal_bg"
+        android:background="@drawable/accessory"
         android:textSize="16sp" />
 
 </LinearLayout>
