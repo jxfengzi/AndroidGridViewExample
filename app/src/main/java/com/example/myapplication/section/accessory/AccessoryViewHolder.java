@@ -9,14 +9,17 @@ import com.example.myapplication.R;
 
 public class AccessoryViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView textView;
+    private final TextView textViewRoom;
+    private final TextView textViewName;
 
     public AccessoryViewHolder(View view) {
         super(view);
-        textView = view.findViewById(R.id.textView);
+        textViewRoom = view.findViewById(R.id.textViewRoom);
+        textViewName = view.findViewById(R.id.textViewName);
     }
 
     public void onBind(Accessory accessory) {
-        textView.setText(accessory.name());
+        textViewRoom.setText(accessory.room());
+        textViewName.setText(accessory.name());
     }
 }

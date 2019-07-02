@@ -11,13 +11,14 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         tools:text="Title test text"/>
+
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_marginLeft="15dp"-->
 
 </RelativeLayout>
