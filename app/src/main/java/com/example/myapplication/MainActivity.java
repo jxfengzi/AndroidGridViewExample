@@ -2,13 +2,10 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -23,8 +20,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final int MAX = 4;
     private RecyclerView recyclerView;
-    private GridLayoutManager layoutManager;
     private MyAdapter myAdapter;
 
     @Override
@@ -32,26 +29,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        initAdapter();
+        initView();
+        initLayout();
+    }
 
-        layoutManager = new GridLayoutManager(this, 3);
-        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.addItemDecoration( new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.addItemDecoration( new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
-        recyclerView.setItemAnimator( new DefaultItemAnimator());
-
+    private void initAdapter() {
         myAdapter = new MyAdapter(this);
-        recyclerView.setAdapter(myAdapter);
-
         myAdapter.list.add(new DeviceSummary("开关"));
-        myAdapter.list.add(new DeviceSummary("插座"));
-        myAdapter.list.add(new DeviceSummary("风扇"));
+        myAdapter.list.add(new DeviceSummary("这是一个插座"));
+        myAdapter.list.add(new DeviceSummary("这是客厅的风扇"));
         myAdapter.list.add(new DeviceSummary("空调"));
         myAdapter.list.add(new DeviceSummary("电视"));
         myAdapter.list.add(new DeviceSummary("空气净化器"));
         myAdapter.list.add(new DeviceSummary("扫地机"));
+    }
+
+    private void initView() {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(myAdapter);
+    }
+
+    private void initLayout() {
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 2);
+        layoutManage.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (myAdapter.getDevices().get(position).name.length() > MAX) {
+                    return 2;
+                }
+
+                return 1;
+            }
+        });
+
+        recyclerView.setLayoutManager(layoutManage);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -60,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         public ViewHolder(View v) {
             super(v);
             textViewName = v.findViewById(R.id.textView);
-            v.setBackgroundColor(Color.GRAY);
+//            v.setBackgroundColor(Color.GRAY);
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
         }
@@ -85,19 +97,19 @@ public class MainActivity extends AppCompatActivity {
 
     public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
         private List<DeviceSummary> list = new ArrayList<>();
-        private final int mBackground;
+//        private final int mBackground;
         private final TypedValue mTypedValue = new TypedValue();
 
         public MyAdapter(Context context) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
+//            mBackground = mTypedValue.resourceId;
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_summary, parent, false);
-            v.setBackgroundResource(mBackground);
+//            v.setBackgroundResource(mBackground);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
